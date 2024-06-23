@@ -37,6 +37,7 @@ const Login = () => {
                 <label >Password</label>
                 <input type="password" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
+            {ErrorMessage}
             <div className="button-group">
                 <button type="button" onClick={handleLogin}>Login</button>
                 <button type="button" onClick={signupPage}>Sign Up</button>

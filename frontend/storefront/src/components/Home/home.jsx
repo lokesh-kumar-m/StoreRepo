@@ -13,7 +13,7 @@ const Home=()=>{
                 console.error("Error fetching products", error);
             });
     }, []);
-
+    console.log(prods)
     return(
         <div>
             <Header/>
@@ -23,7 +23,7 @@ const Home=()=>{
             <div>
                 <main>
                     <div className="grid-container">
-                        {prods.map((prod)=><Card/>)}
+                        {prods.map((prod)=><Card name={prod.name} quantity={prod.numbers} cost={prod.price}/>)}
                     </div>
                 </main>
             </div>

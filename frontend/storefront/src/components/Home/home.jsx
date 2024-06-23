@@ -3,27 +3,27 @@ import Header from "../Header/Header";
 import Card from "./card";
 import { GetProducts } from "../api/productApiService";
 
-const Home=()=>{
-    const [prods,setProducts]=useState([])
+const Home = () => {
+    const [prods, setProducts] = useState([])
     useEffect(() => {
-       GetProducts().then(response => {
-                setProducts(response.data);
-            })
+        GetProducts().then(response => {
+            setProducts(response.data);
+        })
             .catch(error => {
                 console.error("Error fetching products", error);
             });
     }, []);
-    console.log(prods)
-    return(
+
+    return (
         <div>
-            <Header/>
+            <Header />
             <div className="main_Heading">
-            <h1>Welcome to the Store</h1>
+                <h1>Welcome to the Store</h1>
             </div>
             <div>
                 <main>
                     <div className="grid-container">
-                        {prods.map((prod)=><Card name={prod.name} quantity={prod.numbers} cost={prod.price}/>)}
+                        {prods.map((prod,id) => <Card key={id} name={prod.name} quantity={prod.numbers} cost={prod.price} />)}
                     </div>
                 </main>
             </div>

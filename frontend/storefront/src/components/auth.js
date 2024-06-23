@@ -3,50 +3,50 @@ import { apiContext } from "./api/apiContext";
 import { AuthenticateUser } from "./api/userApiService";
 
 
-export const AuthContext=createContext()
-export const useAuth=()=>useContext(AuthContext)
+export const AuthContext = createContext()
+export const useAuth = () => useContext(AuthContext)
 
-const Auth=({children})=>{
-    const [isAuthentic,setAuthentic]=useState(false)
-    const [username,setName]=useState('')
-    const [authToken,setToken]=useState('')
+const Auth = ({ children }) => {
+    const [isAuthentic, setAuthentic] = useState(false)
+    const [username, setName] = useState('')
+    const [authToken, setToken] = useState('')
 
 
-    async function islogin(username,password){
-        try{
+    async function islogin(username, password) {
+        try {
             //api call to check if user exists
-            const response=await AuthenticateUser({"username":username,"password":password})
-            if(response.status==200){
-            const jwtToken='Bearer '+response.data
-            setToken(jwtToken)
-            setName(username)
-            setAuthentic(true)
-            apiContext.interceptors.request.use(
-                (config)=>{
-                    config.headers.Authorization=jwtToken
-                    return config
-                }
-            )
-            return true;
+            const response = await AuthenticateUser({ "username": username, "password": password })
+            if (response.status == 200) {
+                const jwtToken = 'Bearer ' + response.data
+                setToken(jwtToken)
+                setName(username)
+                setAuthentic(true)
+                apiContext.interceptors.request.use(
+                    (config) => {
+                        config.headers.Authorization = jwtToken
+                        return config
+                    }
+                )
+                return true;
             }
-            else{
+            else {
                 setAuthentic(false)
                 return false
             }
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
 
-    function islogout(){
+    function islogout() {
         setToken('')
         setAuthentic(false)
         return true
     }
 
-    return(
-        <AuthContext.Provider value={ {username,isAuthentic,authToken,islogin,islogout} }>
+    return (
+        <AuthContext.Provider value={{ username, isAuthentic, authToken, islogin, islogout }}>
             {children}
         </AuthContext.Provider>
     );
